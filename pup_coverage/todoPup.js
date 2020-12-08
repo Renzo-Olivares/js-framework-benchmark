@@ -133,9 +133,9 @@ var server = app.listen(8080);
 })();
 /*
 Execution format:
-node coverage/todoPup.js /input/directory/
+node pup_coverage/todoPup.js /input/directory/
 Sample:
-node coverage/todoPup.js ../js-framework-benchmark/frameworks/keyed/vanillajs/index.html
+node pup_coverage/todoPup.js ../js-framework-benchmark/frameworks/keyed/vanillajs/index.html
 */
 
 //run the following commands inside the framework you would like to test
