@@ -6,8 +6,9 @@ const jsCov = require('./jsCoverage.js');
 var app = express();
 var path = require('path');
 var root = process.argv[2];
-//var appPath =
+var appPath = process.argv[1].substr(0, process.argv[1].search('pup_coverage') - 1)
 console.log(root)
+console.log(appPath)
 var arr =((process.argv[2]).split(path.sep)).filter(el=> el!=="");
 var last = arr[arr.length-1] || arr[arr.length-2];
 //root=path.join(root,last)
@@ -18,8 +19,7 @@ var siteassets = path.sep+ path.join(main,"css")+path.sep;
 console.log(root,main,siteassets)
 app.use(express.static(root));
 app.use(express.static(main));
-app.use(express.static('/home/renzo/research/js-framework-benchmark'));
-// app.use(express.static(appPath));
+app.use(express.static(appPath));
 // viewed at http://localhost:8080
 app.get('/', function(req, res) {
     res.sendFile(root + '/index.html');
