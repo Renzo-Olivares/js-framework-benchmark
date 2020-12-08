@@ -137,3 +137,7 @@ node coverage/todoPup.js /input/directory/
 Sample:
 node coverage/todoPup.js ../js-framework-benchmark/frameworks/keyed/vanillajs/index.html
 */
+
+//run the following commands inside the framework you would like to test
+//First run npm install
+//Then run npm run build-prod
