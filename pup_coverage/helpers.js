@@ -2,7 +2,7 @@ async function waitForAnySelector (page, selectors) {
 return new Promise((resolve, reject) => {
         let hasFound = false
         selectors.forEach(selector => {
-          page.waitFor(selector)
+          page.waitForTimeout(selector)
             .then(() => {
               if (!hasFound) {
                 hasFound = true
