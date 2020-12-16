@@ -41,84 +41,104 @@ var server = app.listen(8080);
   await page.goto('http://localhost:8080', { waitUntil: 'domcontentloaded' });
 
   //start
-  const clear = await waitForAnySelector(page, [
-    "button[id='clear']",
-  ])
+
+  //buttons
+  const clearX = await page.$x('//*[@id="clear"]')
+  const addX = await page.$x('//*[@id="add"]')
+  const runX = await page.$x('//*[@id="run"]')
+  const updateX = await page.$x('//*[@id="update"]') 
+  const swapX = await page.$x('//*[@id="swaprows"]') 
+  const runlotsX = await page.$x('//*[@id="runlots"]')
 
   //benchAdd
-  const add = await waitForAnySelector(page, [
-    "button[id='add']",
-  ])
-  await page.click(add);
-  await page.click(clear) //clear
+  if (addX.length > 0 && clearX.length > 0){
+    await addX[0].click()
+    await clearX[0].click()
+  }else{
+    console.log("benchAdd failed")
+  }
   //benchAdd
 
   //benchReplaceAll
-  const run = await waitForAnySelector(page, [
-    "button[id='run']",
-  ])
-  await page.click(run)
-  await page.click(clear) //clear
+  if(runX.length > 0 &&  clearX.length > 0){
+    await runX[0].click()
+    await clearX[0].click()
+  }else{
+    console.log("benchReplaceAll failed")
+  }
   //benchReplaceAll
 
   //benchUpdate
-  const update = await waitForAnySelector(page, [
-    "button[id='update']",
-  ]) 
-  await page.click(run)
-  await page.click(update)
-  for (let i = 0; i < 10; i++) {
-    await page.click(update)
+  if(runX.length > 0 && updateX.length > 0 && clearX.length > 0){
+    await runX[0].click()
+    for (let i = 0; i < 10; i++) {
+      await updateX[0].click()
+    }
+    await clearX[0].click()
+  }else{
+    console.log("benchUpdate failed")
   }
-  await page.click(clear) //clear
   //benchUpdate
 
   //benchSelect
-  await page.click(run)
-  for (let i = 1; i < 100; i++) {
-    const benchSelect = await page.$x(`//tbody/tr[${i}]/td[2]/a`)
-    if(benchSelect.length > 0){
-      await benchSelect[0].click()
+  if(runX.length > 0 && clearX.length > 0){
+    await runX[0].click()
+    for (let i = 1; i < 100; i++) {
+      const benchSelect = await page.$x(`//tbody/tr[${i}]/td[2]/a`)
+      if(benchSelect.length > 0){
+        await benchSelect[0].click()
+      }
     }
+    await clearX[0].click()
+  }else{
+    console.log("benchSelect failed")
   }
-  await page.click(clear) //clear
   //benchSelect
 
   //benchSwapRows
-  const swap = await waitForAnySelector(page, [
-    "button[id='swaprows']",
-  ]) 
-  await page.click(run)
-  await page.click(swap)
-  await page.click(clear) //clear
+  if(runX.length > 0 && swapX.length > 0 && clearX.length > 0){
+    await runX[0].click()
+    await swapX[0].click()
+    await clearX[0].click()
+  }else{
+    console.log("benchSwapRows failed")
+  }
   //benchSwapRows
 
-  //benchRunBig
-  const runlots = await waitForAnySelector(page, [
-    "button[id='runlots']",
-  ]) 
-  await page.click(runlots)
-  await page.click(clear) //clear
-  //benchRunBig
-
-  //benchRemove
-  await page.click(run)
-  for (let i = 1; i < 100; i++) {
-    const benchRemove = await page.$x(`//tbody/tr[${i}]/td[3]/a/span[1]`)
-    if(benchRemove.length > 0){
-      await benchRemove[0].click()
-    }
+  //benchRunBig 
+  if(runlotsX.length > 0 && clearX.length > 0){
+    await runlotsX[0].click()
+    await clearX[0].click()
+  }else{
+    console.log("benchRunBig failed")
   }
-  await page.click(clear) //clear
+  //benchRunBig
+
+  //benchRemove
+  if(runX.length > 0 && clearX.length > 0){
+    await runX[0].click()
+    for (let i = 1; i < 100; i++) {
+      const benchRemove = await page.$x(`//tbody/tr[${i}]/td[3]/a/span[1]`)
+      if(benchRemove.length > 0){
+        console.log("removing")
+        await benchRemove[0].click()
+      }
+    }
+    await clearX[0].click()
+  }else{
+    console.log("benchRemove failed")
+  }
   //benchRemove
 
   //benchAppendToManyRows
-  await page.click(run)
-  await page.click(add)
-  await page.click(clear) //clear
+  if(runX.length > 0 && addX.length > 0 && clearX.length > 0){
+    await runX[0].click()
+    await addX[0].click()
+    await clearX[0].click()
+  }else{
+    console.log("benchAppendToManyRows failed")
+  }
   //benchAppendToManyRows
-
-  // await page.waitFor(100000000);
 
   const jsCoverage = await jsCov.stopJSCov(page.coverage);
   await jsCov.parseJSCov(jsCoverage);
