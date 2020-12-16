@@ -45,21 +45,17 @@ var server = app.listen(8080);
     "button[id='clear']",
   ])
 
+  const run = await waitForAnySelector(page, [
+    "button[id='run']",
+  ])
+
   //benchAdd
   const add = await waitForAnySelector(page, [
     "button[id='add']",
   ])
   await page.click(add);
-  await page.click(clear) //clear
+  // await page.click(clear) //clear
   //benchAdd
-
-  //benchReplaceAll
-  const run = await waitForAnySelector(page, [
-    "button[id='run']",
-  ])
-  await page.click(run)
-  await page.click(clear) //clear
-  //benchReplaceAll
 
   //benchUpdate
   const update = await waitForAnySelector(page, [
@@ -70,27 +66,27 @@ var server = app.listen(8080);
   for (let i = 0; i < 10; i++) {
     await page.click(update)
   }
-  await page.click(clear) //clear
+  // await page.click(clear) //clear
   //benchUpdate
 
   //benchSelect
-  await page.click(run)
+  // await page.click(run)
   for (let i = 1; i < 100; i++) {
     const benchSelect = await page.$x(`//tbody/tr[${i}]/td[2]/a`)
     if(benchSelect.length > 0){
       await benchSelect[0].click()
     }
   }
-  await page.click(clear) //clear
+  // await page.click(clear) //clear
   //benchSelect
 
   //benchSwapRows
   const swap = await waitForAnySelector(page, [
     "button[id='swaprows']",
   ]) 
-  await page.click(run)
+  // await page.click(run)
   await page.click(swap)
-  await page.click(clear) //clear
+  // await page.click(clear) //clear
   //benchSwapRows
 
   //benchRunBig
@@ -98,11 +94,11 @@ var server = app.listen(8080);
     "button[id='runlots']",
   ]) 
   await page.click(runlots)
-  await page.click(clear) //clear
+  // await page.click(clear) //clear
   //benchRunBig
 
   //benchRemove
-  await page.click(run)
+  // await page.click(run)
   for (let i = 1; i < 100; i++) {
     const benchRemove = await page.$x(`//tbody/tr[${i}]/td[3]/a/span[1]`)
     if(benchRemove.length > 0){
@@ -111,12 +107,6 @@ var server = app.listen(8080);
   }
   await page.click(clear) //clear
   //benchRemove
-
-  //benchAppendToManyRows
-  await page.click(run)
-  await page.click(add)
-  await page.click(clear) //clear
-  //benchAppendToManyRows
 
   // await page.waitFor(100000000);
 
